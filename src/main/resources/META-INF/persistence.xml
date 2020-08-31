@@ -6,6 +6,10 @@
 
 	<persistence-unit name="MarketPU" transaction-type="JTA">
 		<jta-data-source>java:/MarketDS</jta-data-source>
+		<class>pe.edu.upc.market.models.entities.Cliente</class>
+		<class>pe.edu.upc.market.models.entities.Distrito</class>
+		<class>pe.edu.upc.market.models.entities.Pedido</class>
+		<class>pe.edu.upc.market.models.entities.Tienda</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property
