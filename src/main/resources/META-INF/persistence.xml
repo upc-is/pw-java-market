@@ -10,6 +10,9 @@
 		<class>pe.edu.upc.market.models.entities.Distrito</class>
 		<class>pe.edu.upc.market.models.entities.Pedido</class>
 		<class>pe.edu.upc.market.models.entities.Tienda</class>
+		<class>pe.edu.upc.market.models.entities.Producto</class>
+		<class>pe.edu.upc.market.models.entities.DetallePedido</class>
+		<class>pe.edu.upc.market.models.entities.ProductoTienda</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property
