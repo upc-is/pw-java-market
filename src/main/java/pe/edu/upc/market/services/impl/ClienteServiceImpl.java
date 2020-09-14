@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import pe.edu.upc.market.models.repositories.ClienteRepository;
 import pe.edu.upc.market.services.ClienteService;
 
 @Named
+@ApplicationScoped
 public class ClienteServiceImpl implements ClienteService, Serializable{
 
 	private static final long serialVersionUID = 1L;

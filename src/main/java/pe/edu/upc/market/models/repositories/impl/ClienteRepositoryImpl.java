@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import pe.edu.upc.market.models.entities.Cliente;
 import pe.edu.upc.market.models.repositories.ClienteRepository;
 
 @Named
+@ApplicationScoped
 public class ClienteRepositoryImpl implements ClienteRepository, Serializable {
 
 	private static final long serialVersionUID = 1L;
