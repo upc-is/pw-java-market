@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Lista de Estudiantes</title>
+</h:head>
+
+<h:body>
+
+	<h1>Estudiantes</h1>
+	
+	<p:dataTable var="estudiante" value="#{estudianteView.estudiantes}">
+	    <p:column headerText="Id">
+	        <h:outputText value="#{estudiante.id}" />
+	    </p:column>
+	    
+	    <p:column headerText="Tiu">
+	        <h:outputText value="#{estudiante.tiu}" />
+	    </p:column>
+	 
+	    <p:column headerText="Nombres y Apellidos">
+	        <h:outputText value="#{estudiante.persona.nombresApellidos}" />
+	    </p:column>
+	 
+	    <p:column headerText="Numero de Documento">
+	        <h:outputText value="#{estudiante.persona.numeroDocumento}" />
+	    </p:column>
+	 
+	    <p:column headerText="Dirección">
+	        <h:outputText value="#{estudiante.persona.direccion}" />
+	    </p:column>
+	    
+	    <p:column headerText="Distrito">
+	        <h:outputText value="#{estudiante.carrera}" />
+	    </p:column>
+	    
+	    
+	</p:dataTable>
+	
+</h:body>
+</html>
