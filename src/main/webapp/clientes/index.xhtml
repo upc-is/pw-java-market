@@ -12,7 +12,7 @@
 	<h1>Clientes</h1>
 	
 	<h:form id="form-cliente">
-		<p:panelGrid id="panel-cliente" columns="4" >
+		<p:panelGrid id="panel-cliente" columns="4" style="#{clienteView.stylePanelCliente}" >
 			<p:outputLabel for="input-nombresApellidos" value="Nombres y Apellidos :"/>
 			<p:inputText id="input-nombresApellidos" value="#{clienteView.cliente.nombresApellidos}" />			
 			<p:outputLabel for="input-numeroDocumento" value="Número de documento :"/>
@@ -31,14 +31,15 @@
 			<p:inputText id="input-telefono" value="#{clienteView.cliente.telefono}" />
 			<p:outputLabel for="input-email" value="E-mail :"/>
 			<p:inputText id="input-email" value="#{clienteView.cliente.email}" />
-			
-			<h:outputText id="selectedItemText" value="#{clienteView.cliente.distrito.nombre}"/>
 		</p:panelGrid>
 		
 		<p:dataTable id="table-cliente" value="#{clienteView.clientes}" var="cliente"
 				paginator="true" rows="5" paginatorPosition="bottom" 
 				selectionMode="single" rowKey="#{cliente.id}">
+				
 			<p:ajax event="rowSelect" listener="#{clienteView.selectCliente}" />
+			<p:ajax event="rowUnselect" listener="#{clienteView.unselectCliente}" />
+			
 		    <p:column headerText="Id">
 		        <h:outputText value="#{cliente.id}" />
 		    </p:column>		 
@@ -69,6 +70,12 @@
 					update=":form-cliente:panel-cliente" />
 				<p:commandButton value="Grabar" icon="pi pi-save"
 					actionListener="#{clienteView.saveCliente()}"
+					update=":form-cliente:panel-cliente :form-cliente:table-cliente" />
+				<p:commandButton value="Editar" icon="pi pi-pencil"
+					actionListener="#{clienteView.editCliente()}" 
+					update=":form-cliente:panel-cliente" />
+				<p:commandButton value="Eliminar" icon="pi pi-trash"
+					actionListener="#{clienteView.deleteCliente()}" 
 					update=":form-cliente:panel-cliente :form-cliente:table-cliente" />
 				
 			</f:facet>

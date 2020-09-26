@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 import pe.edu.upc.market.models.entities.Cliente;
 import pe.edu.upc.market.models.entities.Distrito;
@@ -23,28 +24,30 @@ public class ClienteView implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Cliente> clientes;
+	// Objeto asociado al formulario del cliente
 	private Cliente cliente;
+	// Objeto asociado al rowSelect del datatable
 	private Cliente clienteSelected;
 
 	private List<Distrito> distritos;	
 	private Distrito distritoSelected;	
 	
 	private Action action;
+	private String stylePanelCliente;
 	
 	@Inject
 	private ClienteService clienteService;	
 
 	@Inject
 	private DistritoService distritoService;	
-	
-	
-	
+
 	@PostConstruct
 	public void init() {
 		this.cleanForm();
 		this.loadClientes();		
 		this.loadDistritos();
 		this.action = Action.NONE;
+		this.stylePanelCliente = "display:none;";
 	}
 
 	public void loadClientes() {
@@ -75,12 +78,14 @@ public class ClienteView implements Serializable{
 
 	public void cleanForm( ) {
 		this.cliente = new Cliente();
+		this.clienteSelected = null;
 	}
 	
 	// Metodo cuando se hace click en el boton Nuevo
 	public void newCliente() {
 		cleanForm();
 		this.action = Action.NEW;
+		this.stylePanelCliente = "display:block;";
 	}
 	
 	// Funciona cuando se cambia el distrito
@@ -119,6 +124,31 @@ public class ClienteView implements Serializable{
 	public void selectCliente(SelectEvent<Cliente> e) {
 		this.clienteSelected = e.getObject();
 	}
+	// Metodo que se ejecuta cuando el evento rowUnselect ocurra
+	public void unselectCliente(UnselectEvent<Cliente> e) { 
+		this.clienteSelected = null;
+	}
+	// Método que se ejecuta cuando hago click en el boton Editar
+	public void editCliente() {
+		if( this.clienteSelected != null ) {
+			this.cliente = this.clienteSelected;
+			this.action = Action.EDIT;
+		}		
+	}
+	// Método que se ejecuta cuando hago click en el boton Eliminar
+	public void deleteCliente() {
+		if( this.clienteSelected != null ) {
+			try {
+				clienteService.deleteById( this.clienteSelected.getId());
+				cleanForm();
+				loadClientes();
+				this.action = Action.NONE;
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 
 	public ClienteService getClienteService() {
 		return clienteService;
@@ -138,6 +168,10 @@ public class ClienteView implements Serializable{
 
 	public DistritoService getDistritoService() {
 		return distritoService;
+	}
+
+	public String getStylePanelCliente() {
+		return stylePanelCliente;
 	}
 	
 	

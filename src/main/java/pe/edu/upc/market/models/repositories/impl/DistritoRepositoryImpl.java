@@ -48,7 +48,6 @@ public class DistritoRepositoryImpl implements DistritoRepository, Serializable 
 		Optional<Distrito> optional = Optional.empty();		
 		
 		String qlString = "SELECT d FROM Distrito d WHERE d.id = ?1";
-		System.err.println("---INGRESO: " + qlString);
 		TypedQuery<Distrito> query = em.createQuery(qlString, Distrito.class);
 		query.setParameter(1, id);
 		
