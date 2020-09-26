@@ -26,6 +26,9 @@ public class Persona {
 	
 	@OneToOne(mappedBy = "persona")
 	private Estudiante estudiante;
+	
+	@OneToOne(mappedBy = "persona")
+	private Docente docente;
 
 	public Long getId() {
 		return id;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import pe.edu.upc.market.models.entities.Distrito;
 import pe.edu.upc.market.models.repositories.DistritoRepository;
 
 @Named
+@ApplicationScoped
 public class DistritoRepositoryImpl implements DistritoRepository, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +48,7 @@ public class DistritoRepositoryImpl implements DistritoRepository, Serializable 
 		Optional<Distrito> optional = Optional.empty();		
 		
 		String qlString = "SELECT d FROM Distrito d WHERE d.id = ?1";
+		System.err.println("---INGRESO: " + qlString);
 		TypedQuery<Distrito> query = em.createQuery(qlString, Distrito.class);
 		query.setParameter(1, id);
 		

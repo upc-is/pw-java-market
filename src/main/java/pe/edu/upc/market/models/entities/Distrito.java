@@ -34,6 +34,10 @@ public class Distrito {
 		clientes = new ArrayList<Cliente>();
 		tiendas = new ArrayList<Tienda>();
 	}
+	
+	public String getIdString() {
+		return Integer.toString(id);
+	}
 
 	public Integer getId() {
 		return id;

@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -39,6 +40,9 @@ public class Cliente {	// upper Cammel case
 	@JoinColumn(name = "distrito_id")
 	private Distrito distrito;
 	
+	@Transient
+	private Integer distritoId;
+	
 	@Column(name = "telefono", length = 9, nullable = false)
 	private String telefono;
 	
@@ -50,6 +54,7 @@ public class Cliente {	// upper Cammel case
 	
 	public Cliente() {
 		pedidos = new ArrayList<Pedido>();
+		this.distritoId = 0;
 	}
 
 	public Integer getId() {
@@ -90,6 +95,9 @@ public class Cliente {	// upper Cammel case
 
 	public void setDistrito(Distrito distrito) {
 		this.distrito = distrito;
+		if (this.distrito != null) {
+			this.distritoId = this.distrito.getId();
+		}
 	}
 
 	public String getTelefono() {
@@ -115,5 +123,17 @@ public class Cliente {	// upper Cammel case
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	public Integer getDistritoId() {
+		if(this.distritoId <= 0 && this.distrito != null) {
+			this.distritoId = this.distrito.getId();
+		}
+		return distritoId;
+	}
+
+	public void setDistritoId(Integer distritoId) {
+		this.distritoId = distritoId;
+	}
+	
 	
 }

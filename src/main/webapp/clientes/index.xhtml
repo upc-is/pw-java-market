@@ -11,36 +11,72 @@
 
 	<h1>Clientes</h1>
 	
-	<p:dataTable var="cliente" value="#{clienteView.clientes}">
-	    <p:column headerText="Id">
-	        <h:outputText value="#{cliente.id}" />
-	    </p:column>
-	 
-	    <p:column headerText="Nombres y Apellidos">
-	        <h:outputText value="#{cliente.nombresApellidos}" />
-	    </p:column>
-	 
-	    <p:column headerText="Numero de Documento">
-	        <h:outputText value="#{cliente.numeroDocumento}" />
-	    </p:column>
-	 
-	    <p:column headerText="Dirección">
-	        <h:outputText value="#{cliente.direccion}" />
-	    </p:column>
-	    
-	    <p:column headerText="Distrito">
-	        <h:outputText value="#{cliente.distrito.nombre}" />
-	    </p:column>
-	    
-	    <p:column headerText="Telefono">
-	        <h:outputText value="#{cliente.telefono}" />
-	    </p:column>
-	    
-	    <p:column headerText="E-mail">
-	        <h:outputText value="#{cliente.email}" />
-	    </p:column>
-	    
-	</p:dataTable>
+	<h:form id="form-cliente">
+		<p:panelGrid id="panel-cliente" columns="4" >
+			<p:outputLabel for="input-nombresApellidos" value="Nombres y Apellidos :"/>
+			<p:inputText id="input-nombresApellidos" value="#{clienteView.cliente.nombresApellidos}" />			
+			<p:outputLabel for="input-numeroDocumento" value="Número de documento :"/>
+			<p:inputText id="input-numeroDocumento" value="#{clienteView.cliente.numeroDocumento}" />
+			
+			<p:outputLabel for="input-direccion" value="Dirección :"/>
+			<p:inputText id="input-direccion" value="#{clienteView.cliente.direccion}" />
+			<p:outputLabel for="select-distrito" value="Distrito :"/>
+			<p:selectOneMenu id="select-distrito" value="#{clienteView.cliente.distritoId}">
+			    <f:selectItem itemLabel="Selecciona uno" itemValue="0" noSelectionOption="true" />-->
+			    <f:selectItems value="#{distritoMenuView.distritos}" var="distrito" 
+			    	itemLabel="#{distrito.nombre}" itemValue="#{distrito.id}" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="input-telefono" value="Teléfono :"/>
+			<p:inputText id="input-telefono" value="#{clienteView.cliente.telefono}" />
+			<p:outputLabel for="input-email" value="E-mail :"/>
+			<p:inputText id="input-email" value="#{clienteView.cliente.email}" />
+			
+			<h:outputText id="selectedItemText" value="#{clienteView.cliente.distrito.nombre}"/>
+		</p:panelGrid>
+		
+		<p:dataTable id="table-cliente" value="#{clienteView.clientes}" var="cliente"
+				paginator="true" rows="5" paginatorPosition="bottom" 
+				selectionMode="single" rowKey="#{cliente.id}">
+			<p:ajax event="rowSelect" listener="#{clienteView.selectCliente}" />
+		    <p:column headerText="Id">
+		        <h:outputText value="#{cliente.id}" />
+		    </p:column>		 
+		    <p:column headerText="Nombres y Apellidos">
+		        <h:outputText value="#{cliente.nombresApellidos}" />
+		    </p:column>		 
+		    <p:column headerText="Numero de Documento">
+		        <h:outputText value="#{cliente.numeroDocumento}" />
+		    </p:column>		 
+		    <p:column headerText="Dirección">
+		        <h:outputText value="#{cliente.direccion}" />
+		    </p:column>		    
+		    <p:column headerText="Distrito">
+		        <h:outputText value="#{cliente.distrito.nombre}" />
+		    </p:column>		    
+		    <p:column headerText="Telefono">
+		        <h:outputText value="#{cliente.telefono}" />
+		    </p:column>		    
+		    <p:column headerText="E-mail">
+		        <h:outputText value="#{cliente.email}" />
+		    </p:column>		    
+		</p:dataTable> 
+		
+		<p:toolbar>
+			<f:facet name="left">
+				<p:commandButton value="Nuevo" icon="pi pi-file"
+					actionListener="#{clienteView.newCliente()}" 
+					update=":form-cliente:panel-cliente" />
+				<p:commandButton value="Grabar" icon="pi pi-save"
+					actionListener="#{clienteView.saveCliente()}"
+					update=":form-cliente:panel-cliente :form-cliente:table-cliente" />
+				
+			</f:facet>
+		</p:toolbar>
+	
+	</h:form>
+	
+	
 	
 </h:body>
 </html>
