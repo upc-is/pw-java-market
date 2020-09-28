@@ -7,6 +7,7 @@ JSF -> Front*/
 // int -> Integer
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -42,6 +45,10 @@ public class Cliente {	// upper Cammel case
 	
 	@Transient
 	private Integer distritoId;
+	
+	@Column(name = "fecha_nacimiento")
+	@Temporal(TemporalType.DATE)
+	private Date fechaNacimiento;
 	
 	@Column(name = "telefono", length = 9, nullable = false)
 	private String telefono;
@@ -133,6 +140,14 @@ public class Cliente {	// upper Cammel case
 
 	public void setDistritoId(Integer distritoId) {
 		this.distritoId = distritoId;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	
 	

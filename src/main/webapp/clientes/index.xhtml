@@ -32,6 +32,9 @@
 			<p:inputText id="input-telefono" value="#{clienteView.cliente.telefono}" />
 			<p:outputLabel for="input-email" value="E-mail :"/>
 			<p:inputText id="input-email" value="#{clienteView.cliente.email}" />
+			
+			<p:outputLabel for="input-fechaNacimiento" value="Fecha de nacimiento :"/>
+			<p:datePicker id="input-fechaNacimiento" value="#{clienteView.cliente.fechaNacimiento}" />
 		</p:panelGrid>
 		
 		<p:panelGrid id="panel-search" columns="4" style="#{clienteView.styleTableCliente}" >
@@ -82,6 +85,9 @@
 		    </p:column>		    
 		    <p:column headerText="E-mail">
 		        <h:outputText value="#{cliente.email}" />
+		    </p:column>	
+		    <p:column headerText="Fecha de Nacimiento">
+		        <h:outputText value="#{cliente.fechaNacimiento}" />
 		    </p:column>		    
 		</p:dataTable> 
 		
