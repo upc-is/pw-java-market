@@ -12,6 +12,7 @@
 	<h1>Clientes</h1>
 	
 	<h:form id="form-cliente">
+		<p:growl id="growl" life="2000" />
 		<p:panelGrid id="panel-cliente" columns="4" style="#{clienteView.stylePanelCliente}" >
 			<p:outputLabel for="input-nombresApellidos" value="Nombres y Apellidos :"/>
 			<p:inputText id="input-nombresApellidos" value="#{clienteView.cliente.nombresApellidos}" />			
@@ -33,12 +34,33 @@
 			<p:inputText id="input-email" value="#{clienteView.cliente.email}" />
 		</p:panelGrid>
 		
+		<p:panelGrid id="panel-search" columns="4" style="#{clienteView.styleTableCliente}" >
+			<p:outputLabel for="input-search-nombresApellidos" value="Nombres y Apellidos :"/>
+			<p:inputText id="input-search-nombresApellidos" value="#{clienteView.clienteSearch.nombresApellidos}" />	
+			<p:commandButton value="Buscar" icon="pi pi-search" 
+				actionListener="#{clienteView.findByNombresApellidos()}" 
+				update=":form-cliente:table-cliente :form-cliente:toolbar-cliente" />
+			<p:commandButton value="Limpiar" icon="pi pi-refresh" 
+				actionListener="#{clienteView.cleanByNombresApellidos()}" 
+				update="@form" />
+				
+			<p:outputLabel for="input-search-numeroDocumento" value="Número de documento :"/>
+			<p:inputText id="input-search-numeroDocumento" value="#{clienteView.clienteSearch.numeroDocumento}" />	
+			<p:commandButton value="Buscar" icon="pi pi-search" 
+				actionListener="#{clienteView.findByNumeroDocumento()}" 
+				update=":form-cliente:table-cliente :form-cliente:toolbar-cliente" />
+			<p:commandButton value="Limpiar" icon="pi pi-refresh" 
+				actionListener="#{clienteView.cleanByNumeroDocumento()}" 
+				update="@form" />
+		</p:panelGrid>
+		
 		<p:dataTable id="table-cliente" value="#{clienteView.clientes}" var="cliente"
 				paginator="true" rows="5" paginatorPosition="bottom" 
-				selectionMode="single" rowKey="#{cliente.id}">
+				selectionMode="single" rowKey="#{cliente.id}"
+				style="#{clienteView.styleTableCliente}" emptyMessage="No hay clientes encontrados">
 				
-			<p:ajax event="rowSelect" listener="#{clienteView.selectCliente}" />
-			<p:ajax event="rowUnselect" listener="#{clienteView.unselectCliente}" />
+			<p:ajax event="rowSelect" listener="#{clienteView.selectCliente}" update="@form" />
+			<p:ajax event="rowUnselect" listener="#{clienteView.unselectCliente}" update="@form"  />
 			
 		    <p:column headerText="Id">
 		        <h:outputText value="#{cliente.id}" />
@@ -63,20 +85,36 @@
 		    </p:column>		    
 		</p:dataTable> 
 		
-		<p:toolbar>
+		<p:toolbar id="toolbar-cliente">
 			<f:facet name="left">
-				<p:commandButton value="Nuevo" icon="pi pi-file"
+				<p:commandButton value="Nuevo" icon="pi pi-file" disabled="#{clienteView.disabledButtonNuevo}"
 					actionListener="#{clienteView.newCliente()}" 
-					update=":form-cliente:panel-cliente" />
-				<p:commandButton value="Grabar" icon="pi pi-save"
+					update="@form" />
+					
+				<p:commandButton value="Grabar" icon="pi pi-save" disabled="#{clienteView.disabledButtonGrabar}"
 					actionListener="#{clienteView.saveCliente()}"
-					update=":form-cliente:panel-cliente :form-cliente:table-cliente" />
-				<p:commandButton value="Editar" icon="pi pi-pencil"
+					update="@form" />
+				<p:commandButton value="Cancelar" icon="pi pi-times" disabled="#{clienteView.disabledButtonCancelar}"
+					actionListener="#{clienteView.cancelCliente()}"
+					update="@form" />
+					
+				<p:commandButton value="Editar" icon="pi pi-pencil" disabled="#{clienteView.disabledButtonEditar}"
 					actionListener="#{clienteView.editCliente()}" 
-					update=":form-cliente:panel-cliente" />
-				<p:commandButton value="Eliminar" icon="pi pi-trash"
+					update="@form" />
+					
+				<p:commandButton value="Eliminar" icon="pi pi-trash" disabled="#{clienteView.disabledButtonEliminar}"
 					actionListener="#{clienteView.deleteCliente()}" 
-					update=":form-cliente:panel-cliente :form-cliente:table-cliente" />
+					update=":form-cliente:table-cliente :form-cliente:toolbar-cliente" >
+					<p:confirm header="Confirmación" 
+						message="Estas seguro que deseas elimininar a: #{clienteView.messageConfirmDialog}?" 
+						icon="pi pi-exclamation-triangle" />
+				</p:commandButton>
+				
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			    </p:confirmDialog> 
+							
 				
 			</f:facet>
 		</p:toolbar>

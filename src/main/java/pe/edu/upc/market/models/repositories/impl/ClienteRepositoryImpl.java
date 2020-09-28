@@ -57,7 +57,8 @@ public class ClienteRepositoryImpl implements ClienteRepository, Serializable {
 		// Estableciendo los paremetros: id
 		query.setParameter(1, id);
 		// Obtener el resultado de la consulta
-		Cliente cliente = query.getSingleResult();
+		//Cliente cliente = query.getSingleResult();
+		Cliente cliente = query.getResultList().stream().findFirst().orElse(null);
 		// Verificar la existencia del objeto
 		if(cliente != null) {
 			// Agregando el objeto cliente al Optional
@@ -84,11 +85,11 @@ public class ClienteRepositoryImpl implements ClienteRepository, Serializable {
 		// Declara la variable a retornar
 		List<Cliente> clientes = new ArrayList<>();
 		// Elaborar el JPQL
-		String qlString = "SELECT c FROM Cliente c WHERE c.nombresApellidos LIKE '%?1%'";
+		String qlString = "SELECT c FROM Cliente c WHERE c.nombresApellidos LIKE ?1";
 		// Crear la consulta
 		TypedQuery<Cliente> query = em.createQuery(qlString, Cliente.class);
 		// Establer los paremetros
-		query.setParameter(1, nombresApellidos);
+		query.setParameter(1, "%" + nombresApellidos.toUpperCase() + "%");
 		// Obtener el resultado de la consulta
 		clientes = query.getResultList();
 		return clientes;
@@ -105,7 +106,8 @@ public class ClienteRepositoryImpl implements ClienteRepository, Serializable {
 		// Establer los paremetros
 		query.setParameter(1, numeroDocumento);
 		// Obtener el resultado de la consulta
-		Cliente cliente = query.getSingleResult();
+		//Cliente cliente = query.getSingleResult();
+		Cliente cliente = query.getResultList().stream().findFirst().orElse(null);
 		// Verificar la existencia del objeto
 		if(cliente != null) {
 			// Agregando el objeto cliente al Optional
